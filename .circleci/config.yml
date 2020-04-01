@@ -8,12 +8,12 @@ workflows:
   build-and-deploy:
     jobs:
       - aws-ecr/build-and-push-image:
-            repo: '${AWS_ECR_REPO}'
-            region: '${AWS_REGION}'
+            repo: $AWS_ECR_REPO
+            region: ${AWS_REGION}
             tag: '${CIRCLE_SHA1}'
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build_and_push_image # only run this job once aws-ecr/build_and_push_image has completed
-          family: "${AWS_ECS_SERVICE}"
-          cluster-name: "${AWS_CLUSTER_NAME}"
+          family: $AWS_ECS_SERVICE
+          cluster-name: $AWS_CLUSTER_NAME
           container-image-name-updates: "container=${AWS_ECR_REPO}-service,tag=${CIRCLE_SHA1}"
