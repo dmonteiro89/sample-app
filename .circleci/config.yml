@@ -7,9 +7,10 @@ orbs:
 workflows:
   build-and-deploy:
     jobs:
-      - aws-ecr/build_and_push_image:
-          repo: "${AWS_ECR_REPO}"
-          tag: "${CIRCLE_SHA1}"
+      - aws-ecr/build-and-push-image:
+            repo: '${AWS_ECR_REPO}'
+            region: '${AWS_REGION}'
+            tag: '${CIRCLE_SHA1}'
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build_and_push_image # only run this job once aws-ecr/build_and_push_image has completed
