@@ -1,16 +1,16 @@
 version: 2.1
 
 orbs:
-  aws-ecr: circleci/aws-ecr@6.5.0
-  aws-ecs: circleci/aws-ecs@0.0.10
+  aws-ecr: circleci/aws-ecr@6.8.1
+  aws-ecs: circleci/aws-ecs@1.1.0
 
 workflows:
   build-and-deploy:
     jobs:
       - aws-ecr/build-and-push-image:
-            repo: $AWS_ECR_REPO
-            region: ${AWS_REGION}
-            tag: '${CIRCLE_SHA1}'
+            repo: AWS_ECR_REPO
+            region: AWS_REGION
+            tag: latest
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build_and_push_image # only run this job once aws-ecr/build_and_push_image has completed
