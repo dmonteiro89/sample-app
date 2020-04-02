@@ -10,7 +10,6 @@ workflows:
       - aws-ecr/build-and-push-image:
             repo: ${AWS_ECR_REPO}
             region: AWS_REGION
-            tag: 'latest'
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image # only run this job once aws-ecr/build_and_push_image has completed
