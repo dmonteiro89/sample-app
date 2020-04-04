@@ -16,7 +16,7 @@ workflows:
           task-definition-json: task-definition.json
       - aws-ecs/deploy-service-update:
           requires:
-            - update-task-definition-from-json
+            - aws-ecs/update-task-definition-from-json # only run this job once aws-ecr/build_and_push_image has completed
           family: $AWS_ECS_SERVICE
           cluster-name: $AWS_CLUSTER_NAME
           container-image-name-updates: "container=application,image-and-tag=${AWS_ECR_ACCOUNT_URL}/${AWS_ECR_REPO}:latest"
