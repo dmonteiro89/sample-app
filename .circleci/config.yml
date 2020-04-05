@@ -4,7 +4,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.8.1
   aws-ecs: circleci/aws-ecs@1.1.0
 
-workflows:
+jobs:
   update-tag:
     docker:
       - image: 'circleci/python:3.7.1'
@@ -15,11 +15,14 @@ workflows:
           aws-region: $AWS_REGION
       - aws-ecs/update-task-definition-from-json:
           task-definition-json: task-definition.json
+
+workflows:
   build-and-deploy:
     jobs:
       - aws-ecr/build-and-push-image:
-            repo: $AWS_ECR_REPO
-            region: AWS_REGION
+          repo: $AWS_ECR_REPO
+          region: AWS_REGION
+      - update-tag
       - aws-ecs/deploy-service-update:
           requires:
             - aws-ecr/build-and-push-image # only run this job once aws-ecr/build_and_push_image has completed
