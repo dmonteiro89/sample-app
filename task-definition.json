@@ -1,0 +1,35 @@
+{
+  "executionRoleArn": "arn:aws:iam::770328762517:role/ecs_task_execution_role",
+  "containerDefinitions": [
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "application",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "application"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "cpu": 0,
+      "memory": 300,
+      "image": "770328762517.dkr.ecr.us-east-1.amazonaws.com/application:latest",
+      "essential": true,
+      "name": "application"
+    }
+  ],
+  "memory": "512",
+  "taskRoleArn": "arn:aws:iam::770328762517:role/ecs_task_execution_role",
+  "family": "production-application",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "networkMode": "awsvpc",
+  "cpu": "256"
+}

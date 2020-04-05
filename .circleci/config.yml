@@ -1,0 +1,40 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@1.0.0
+  aws-ecr: circleci/aws-ecr@6.8.1
+  aws-ecs: circleci/aws-ecs@1.1.0
+
+jobs:
+  update-tag:
+    docker:
+      - image: 'circleci/python:3.7.1'
+    steps:
+      - checkout
+      - aws-cli/setup
+      - aws-ecs/update-task-definition-from-json:
+          task-definition-json: task-definition.json
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          repo: $AWS_ECR_REPO
+          region: AWS_REGION
+      - update-tag:
+          requires:
+            - aws-ecr/build-and-push-image
+          filters:
+            branches:
+              only:
+                - master
+      - aws-ecs/deploy-service-update:
+          requires:
+            - update-tag
+          filters:
+            branches:
+              only:
+                - master
+          family: $AWS_ECS_SERVICE
+          cluster-name: $AWS_CLUSTER_NAME
+          container-image-name-updates: "container=application,image-and-tag=${AWS_ECR_ACCOUNT_URL}/${AWS_ECR_REPO}:latest"
