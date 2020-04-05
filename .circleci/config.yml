@@ -24,9 +24,17 @@ workflows:
       - update-tag:
           requires:
             - aws-ecr/build-and-push-image
+          filters:
+            branches:
+              only:
+                - master
       - aws-ecs/deploy-service-update:
           requires:
             - update-tag
+          filters:
+            branches:
+              only:
+                - master
           family: $AWS_ECS_SERVICE
           cluster-name: $AWS_CLUSTER_NAME
           container-image-name-updates: "container=application,image-and-tag=${AWS_ECR_ACCOUNT_URL}/${AWS_ECR_REPO}:latest"
