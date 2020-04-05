@@ -21,7 +21,7 @@ workflows:
       - aws-ecr/build-and-push-image:
           repo: $AWS_ECR_REPO
           region: AWS_REGION
-      - update-tag
+      - update-tag:
           requires:
             - aws-ecr/build-and-push-image
       - aws-ecs/deploy-service-update:
