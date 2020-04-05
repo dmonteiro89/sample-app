@@ -26,7 +26,7 @@ workflows:
             - aws-ecr/build-and-push-image
       - aws-ecs/deploy-service-update:
           requires:
-            - aws-ecr/build-and-push-image # only run this job once aws-ecr/build_and_push_image has completed
+            - update-tag
           family: $AWS_ECS_SERVICE
           cluster-name: $AWS_CLUSTER_NAME
           container-image-name-updates: "container=application,image-and-tag=${AWS_ECR_ACCOUNT_URL}/${AWS_ECR_REPO}:latest"
