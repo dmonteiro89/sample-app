@@ -26,10 +26,6 @@
   ],
   "memory": "512",
   "taskRoleArn": "arn:aws:iam::770328762517:role/ecs_task_execution_role",
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
   "family": "production-application",
   "requiresCompatibilities": [
     "FARGATE"
