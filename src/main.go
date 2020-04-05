@@ -3,7 +3,6 @@ package main
 import (
     "fmt"
     "net/http"
-    "os"
 )
 
 func main() {
@@ -12,5 +11,5 @@ func main() {
 }
 
 func HelloEndpoint(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintf(w, "%s, %s!", os.Getenv("HELLO"), r.URL.Path[1:])
+    fmt.Fprintf(w, "%s, %s!", "Hello World", r.URL.Path[1:])
 }
