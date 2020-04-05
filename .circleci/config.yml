@@ -4,9 +4,9 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.8.1
   aws-ecs: circleci/aws-ecs@1.1.0
 
-workflows:
+jobs:
   build-and-deploy:
-    jobs:
+    steps:
       - aws-ecr/build-and-push-image:
             repo: $AWS_ECR_REPO
             region: AWS_REGION
