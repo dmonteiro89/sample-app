@@ -5,7 +5,7 @@ orbs:
   aws-ecs: circleci/aws-ecs@1.1.0
 
 jobs:
-  build-and-deploy:
+  update-tag:
     docker:
       - image: 'circleci/python:3.7.1'
     steps:
